@@ -1,4 +1,38 @@
 @page "/"
 
-<h1>Blazing Pizzas</h1>
-		
+<div class="main">
+    <h1>Blazing Pizzas</h1>
+    <ul class="pizza-cards">
+        @if (specials != null)
+        {
+            @foreach (var special in specials)
+            {
+                <li style="background-image: url('@special.ImageUrl')">
+                    <div class="pizza-info">
+                        <span class="title">@special.Name</span>
+                            @special.Description
+                        <span class="price">@special.GetFormattedBasePrice()</span>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+@code {
+    private List<PizzaSpecial> specials = new();
+    
+    protected override void OnInitialized()
+    {
+        specials.AddRange(new List<PizzaSpecial>
+            {
+                new PizzaSpecial { Name = "Baconator", BasePrice = 11.99M, Description = "A Lot of Bacon!", ImageUrl = "img/pizzas/bacon.jpg" },
+                new PizzaSpecial { Name = "Chimken Picha", BasePrice = 12.99M, Description = "MMMMMMM!", ImageUrl = "img/pizzas/meaty.jpg" },
+                new PizzaSpecial { Name = "Ik Wil Kaas", BasePrice = 10.99M, Description = "Ik ben ook een klant!", ImageUrl = "img/pizzas/cheese.jpg" },
+                new PizzaSpecial { Name = "Mama Margherita", BasePrice = 9.99M, Description = "For Basic B*tches!", ImageUrl = "img/pizzas/margherita.jpg" },
+                new PizzaSpecial { Name = "Mushroom!", BasePrice = 10.99M, Description = "Badger, Badger, Badger, ...!", ImageUrl = "img/pizzas/mushroom.jpg" },
+                new PizzaSpecial { Name = "Big PP", BasePrice = 11.99M, Description = "Look At All Those Pepperonies!", ImageUrl = "img/pizzas/pepperoni.jpg" }
+            });
+    }
+
+}
