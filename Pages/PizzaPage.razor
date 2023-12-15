@@ -2,42 +2,44 @@
 @using BlazingPizza.Data
 @inject PizzaService PizzaSvc
 
-<h1>Choose a Pizza</h1>
+<div>
+    <h1>Choose a Pizza</h1>
 
-<p>Select one from the following recipes:</p>
+    <p>Select one from the following recipes:</p>
 
-@if (todaysPizzas == null)
-{
-    <p>fetching recipes...</p>
-}
-else
-{
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Vegetarian?</th>
-                <th>Vegan?</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (Data.Pizza pizza in todaysPizzas)
-            {
+    @if (todaysPizzas == null)
+    {
+        <p>fetching recipes...</p>
+    }
+    else
+    {
+        <table>
+            <thead>
                 <tr>
-                    <td>@pizza.PizzaID</td>
-                    <td>@pizza.Name</td>
-                    <td>@pizza.Description</td>
-                    <td>@pizza.Price</td>
-                    <td>@pizza.Vegetarian</td>
-                    <td>@pizza.Vegan</td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Vegetarian?</th>
+                    <th>Vegan?</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (Data.Pizza pizza in todaysPizzas)
+                {
+                    <tr>
+                        <td>@pizza.PizzaID</td>
+                        <td>@pizza.Name</td>
+                        <td>@pizza.Description</td>
+                        <td>@pizza.Price</td>
+                        <td>@pizza.Vegetarian</td>
+                        <td>@pizza.Vegan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
 @code {
     private Data.Pizza[] todaysPizzas;
