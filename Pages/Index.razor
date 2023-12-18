@@ -1,4 +1,6 @@
 @page "/"
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
 
 <div class="main">
     <h1>Blazing Pizzas</h1>
@@ -22,7 +24,7 @@
 @code {
     private List<PizzaSpecial> specials = new();
     
-    protected override void OnInitialized()
+    @* protected override void OnInitialized()
     {
         specials.AddRange(new List<PizzaSpecial>
             {
@@ -33,6 +35,11 @@
                 new PizzaSpecial { Name = "Mushroom!", BasePrice = 10.99M, Description = "Badger, Badger, Badger, ...!", ImageUrl = "img/pizzas/mushroom.jpg" },
                 new PizzaSpecial { Name = "Big PP", BasePrice = 11.99M, Description = "Look At All Those Pepperonies!", ImageUrl = "img/pizzas/pepperoni.jpg" }
             });
-    }
+    } *@
 
+    protected override async Task OnInitializedAsync()
+    {
+        // Get list <PizzaSpecial> as JSON from the URI / specials, convert data with GetFromJsonAsync
+        specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
+    }
 }

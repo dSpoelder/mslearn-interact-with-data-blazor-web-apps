@@ -4,7 +4,7 @@ namespace BlazingPizza.Data
     {
         public static void Initialize(PizzaStoreContext db)
         {
-            //Method (sub) for building a sample database, takes a custom database object (db, inherited from Microsoft.EntityFrameworkCore.DbContext) to populate
+            //Method (sub) for building a sample database, takes a custom database object to populate (db, inherited from Microsoft.EntityFrameworkCore.DbContext) 
             //Build an array of PizzaSpecial Items
             var specials = new PizzaSpecial[]
             {
@@ -16,6 +16,10 @@ namespace BlazingPizza.Data
                 new() { Id = 6, Name = "Big PP", BasePrice = 11.99M, Description = "Look At All Those Pepperonies!", ImageUrl = "img/pizzas/pepperoni.jpg" },
                 new() { Id = 7, Name = "Leaf Lovers Special", BasePrice = 7.99M, Description = "Treehugger's and Greenhorn's delight!", ImageUrl = "img/pizzas/salad.jpg" }
             };
+
+            //Add array to database, update records
+            db.Specials.AddRange(specials);
+            db.SaveChanges();
         }
     }
 }
