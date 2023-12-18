@@ -24,7 +24,7 @@ namespace BlazingPizza.Services
 
         public void ClosePizzaConfigDialog()
         {
-            // Reset Data on Selected Pizza, Flag Dialog as Hidden
+            // Reset Data on Selected Pizza, Flag Dialog Window as Hidden
             ConfigPizza = null;
             ShowingConfigDialog = false;
         }
