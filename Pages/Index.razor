@@ -9,7 +9,7 @@
         {
             @foreach (var special in specials)
             {
-                <li style="background-image: url('@special.ImageUrl')">
+                <li @onclick="@( () => ShowPizzaConfigDialog(special))" style="background-image: url('@special.ImageUrl')">
                     <div class="pizza-info">
                         <span class="title">@special.Name</span>
                             @special.Description
@@ -21,9 +21,17 @@
     </ul>
 </div>
 
+@if (showingConfigDialog)
+{
+    <ConfigPizzaDialog Pizza="configPizza" />
+}
+
 @code {
     private List<PizzaSpecial> specials = new();
     
+    public Pizza configPizza;
+    public bool showingConfigDialog;
+
     @* protected override void OnInitialized()
     {
         specials.AddRange(new List<PizzaSpecial>
@@ -42,4 +50,17 @@
         // Get list <PizzaSpecial> as JSON from the URI / specials, convert data with GetFromJsonAsync
         specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>(NavigationManager.BaseUri + "specials");
     }
+
+    public void ShowPizzaConfigDialog(PizzaSpecial special)
+    {
+        configPizza = new()
+        {
+            Special = special,
+            SpecialId = special.Id,
+            Size = Pizza.DefaultSize
+        };
+
+        showingConfigDialog = true;
+    }
+
 }

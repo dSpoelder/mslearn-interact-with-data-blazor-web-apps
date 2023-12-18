@@ -1,0 +1,20 @@
+﻿@page "/shared"
+
+<div>
+    <h3>SharePage</h3>
+    
+    @* Could work, if the custom markup element Pizza was defined*@
+    @* <Pizza PizzaName="Flat" PizzaDescription="Good Pizza" /> *@
+
+</div>
+
+@code {
+    [Parameter]
+    public string PizzaName { get; set; } = "Flat";
+
+    [Parameter]
+    public string PizzaDescription { get; set; } = "Good Pizza";
+
+    [Parameter]
+    public Data.PizzaTopping Topping { get; set; }
+}
