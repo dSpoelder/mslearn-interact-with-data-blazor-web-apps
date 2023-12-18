@@ -24,6 +24,40 @@
     </ul>
 </div>
 
+<div class="sidebar">
+    @if (order.Pizzas.Any())
+    {
+        // Order has Elements
+        <div class="order-contents">
+            <h2>Your Order</h2>
+
+            @foreach (var configPizza in order.Pizzas)
+            {
+                <div class="cart-item">
+                    <div class="title">@(configPizza.Size)" @configPizza.Special.Name</div>
+                    <div class="item-price">@configPizza.GetFormattedTotalPrice()</div>
+                    <a @onclick="@( () => OrderState.RemoveConfigPizza(configPizza))" class="delete-item">🙅</a>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        // Order is Empty
+        <div class="empty-cart">Select a pizza<br>before completing<br>your order.</div>
+    }
+
+    @* Summary, takes two forms, "order-total" if 'order' has any elements and "order-total hidden" on empty *@
+    <div class="@(order.Pizzas.Any() ? "order-total" : "order-total hidden")">
+        Total:
+        <span class="total-price">@order.GetFormattedTotalPrice()</span>
+        <a href="checkout" class="@(OrderState.Order.Pizzas.Count == 0 ? "btn btn-warning disabled" : "btn btn-warning")">
+            Order 🍕
+        </a>
+    </div>
+</div>
+
+
 @if (OrderState.ShowingConfigDialog)
 {
     <ConfigPizzaDialog 
@@ -34,6 +68,7 @@
 
 @code {
     private List<PizzaSpecial> specials = new();
+    Order order => OrderState.Order;
 
     protected override async Task OnInitializedAsync()
     {
