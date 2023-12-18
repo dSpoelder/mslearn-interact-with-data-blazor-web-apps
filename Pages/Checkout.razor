@@ -1,0 +1,46 @@
+@page "/checkout"
+@inject Services.OrderState OrderState
+@inject HttpClient HttpClient
+@inject NavigationManager NavigationManager
+
+<div class="top-bar">
+    <a class="logo" href="">
+        <img src="img/logo.svg" />
+    </a>
+
+    <a class="nav-tab" href="">
+        <img src="img/pizza-slice.svg" />
+        <div>Get Pizza</div>
+    </a>
+</div>
+
+<div class="main">
+    <div class="checkout-cols">
+        <h4>Review Order</h4>
+        @foreach (var pizza in order.Pizzas)
+        {
+            <p>
+                <strong>
+                    @(pizza.Size)"
+                    @pizza.Special.Name
+                    (£@pizza.GetFormattedTotalPrice())
+                </strong>
+            </p>
+        }
+
+        <p>
+            <strong>
+                Total price:
+                £@order.GetFormattedTotalPrice()
+            </strong>
+        </p>
+    </div>
+
+    <button class="checkout-btn btn btn-warning">
+        Place order
+    </button>
+</div>
+
+@code {
+    Order order => OrderState.Order;
+}
